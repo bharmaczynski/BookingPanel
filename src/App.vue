@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import BookingPanel from "@/components/BookingPanel/BookingPanel.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import BookingPanel from '@/components/BookingPanel/BookingPanel.vue';
 
 @Component({
   components: {
@@ -25,5 +25,6 @@ export default class App extends Vue {}
   color: #2c3e50;
   margin-top: 60px;
   font-size: $font-size-base;
+  box-sizing: border-box;
 }
 </style>

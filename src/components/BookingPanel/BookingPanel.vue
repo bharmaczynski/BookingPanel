@@ -12,19 +12,35 @@
           </div>
         </div>
       </div>
+      <Dates :date="date" @dateChanged="onDateChanged" />
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import Dates from '@/components/BookingPanel/Dates/Dates.vue';
 
-@Component
+@Component({
+  components: {
+    Dates,
+  },
+})
 export default class BookingPanel extends Vue {
+  private date: { checkIn: string; checkOut: string } = {
+    checkIn: '',
+    checkOut: '',
+  };
+
   @Prop({ required: true })
   price!: number;
 
   @Prop({ default: 0 })
   numberOfRates!: number;
+
+  onDateChanged(date: { checkIn: string; checkOut: string }): void {
+    this.date = date;
+    console.log('###onDateChanged date', date);
+  }
 }
 </script>
 <style lang="scss" scoped>
