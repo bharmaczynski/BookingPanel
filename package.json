@@ -33,6 +33,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
+    "moment": "^2.29.1",
     "prettier": "^2.2.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
@@ -56,12 +57,7 @@
       "ecmaVersion": 2020
     },
     "rules": {
-      "prettier/prettier": [
-        "warn",
-        {
-          "singleQuote": true
-        }
-      ]
+      "prettier/prettier": 0
     },
     "overrides": [
       {

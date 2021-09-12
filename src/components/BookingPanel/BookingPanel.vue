@@ -5,7 +5,7 @@
         <span class="booking-panel__price text--bold font-size-xxl">
           {{ price }} zł
         </span>
-        <Rating :numberOfRates="123" :rating="3.5" />
+        <Rating :numberOfRates="123" :rating="4.5" />
       </div>
       <Dates :date="date" @dateChanged="onDateChanged" />
     </div>
@@ -36,6 +36,8 @@ export default class BookingPanel extends Vue {
 
   onDateChanged(date: { checkIn: string; checkOut: string }): void {
     this.date = date;
+
+    console.log('###onDateChanged this.date', this.date);
   }
 }
 </script>

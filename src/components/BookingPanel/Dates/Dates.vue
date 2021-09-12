@@ -2,75 +2,127 @@
   <div class="dates-input">
     <span class="dates-input__title text--bold">Dates</span>
     <div class="dates-input__dates-holder">
+      <div class="dates-input__arrow">
+        <ArrowIcon />
+      </div>
       <div class="dates-input__input-holder">
-        <input
-          class="dates-input__input font-size-base"
+        <DateInput
           :value="date.checkIn"
-          placeholder="Check in"
           @input="onInputCheckIn"
+          @click.native="openCalendar"
         />
       </div>
-      <div class="dates-input__input-holder font-size-l">
-        <input
-          class="dates-input__input font-size-base"
+      <div class="dates-input__input-holder dates-input__input-holder--checkout font-size-l">
+        <DateInput
           :value="date.checkOut"
-          placeholder="Check out"
           @input="onInputCheckOut"
+          @click.native="openCalendar"
         />
       </div>
     </div>
+    <Calendar
+      class="dates-input__calendar"
+      v-if="calendarIsOpen"
+      @calendarOverlayClicked="closeCalendar"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import ArrowIcon from '@/assets/icons/arror-right.svg';
+import DateInput from '@/components/BookingPanel/Dates/DateInput/DateInput.vue';
+import Calendar from '@/components/BookingPanel/Dates/Calendar/Calendar.vue';
 
-@Component
+@Component({
+  components: {
+    ArrowIcon,
+    DateInput,
+    Calendar,
+  },
+})
 export default class Dates extends Vue {
+  private calendarIsOpen = false;
+
   @Prop({ required: true })
   date!: {
     checkIn: string;
     checkOut: string;
   };
 
-  onInputCheckIn(event: { target: HTMLInputElement }): void {
+  onInputCheckIn(value: string): void {
     this.$emit('dateChanged', {
-      checkIn: event.target.value,
+      checkIn: value,
       checkOut: this.date.checkOut,
     });
   }
 
-  onInputCheckOut(event: { target: HTMLInputElement }): void {
+  onInputCheckOut(value: string): void {
     this.$emit('dateChanged', {
       checkIn: this.date.checkIn,
-      checkOut: event.target.value,
+      checkOut: value,
     });
+  }
+
+  openCalendar(): void {
+    this.calendarIsOpen = true;
+  }
+
+  closeCalendar(): void {
+    this.calendarIsOpen = false;
   }
 }
 </script>
 <style lang="scss" scoped>
 .dates-input {
+  position: relative;
+  z-index: 0;
   display: flex;
   flex-direction: column;
   margin-top: 30px;
   align-items: flex-start;
 
   &__dates-holder {
+    position: relative;
     display: flex;
     width: 100%;
     border: 1px solid $alto;
     margin-top: 10px;
+    transition: border 0.5s ease;
+
+    &:hover {
+      border: 1px solid $oceanGreen;
+    }
   }
 
-  &__input {
-    border: 0;
-    padding: 10px;
-    width: 100%;
+  &__arrow {
+    position: absolute;
+    z-index: -1;
+    top: 9px;
+    left: 44%;
+    width: 20px;
+    height: 17px;
+
+    svg {
+      width: 100%;
+      height: auto;
+    }
   }
 
   &__input-holder {
     width: 50%;
-    text-align: center;
+
+    &--checkout {
+      padding-left: 10px;
+    }
+  }
+
+  &__calendar {
+    position: absolute;
+    z-index: 0;
+    top: calc(100% + 10px);
+    right: 0;
+    left: 0;
   }
 }
 </style>
