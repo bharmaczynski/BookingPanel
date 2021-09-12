@@ -2,15 +2,10 @@
   <div class="booking-panel">
     <div class="booking-panel__content-wrapper">
       <div class="booking-panel__header">
-        <span class="booking-panel__price text--bold font-size-l">
+        <span class="booking-panel__price text--bold font-size-xxl">
           {{ price }} zł
         </span>
-        <div class="booking-panel__rates">
-          <div class="booking-panel__stars">*****</div>
-          <div class="booking-panel__number-of-rates text--bold">
-            {{ numberOfRates }}
-          </div>
-        </div>
+        <Rating :numberOfRates="123" :rating="3.5" />
       </div>
       <Dates :date="date" @dateChanged="onDateChanged" />
     </div>
@@ -19,10 +14,12 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import Dates from '@/components/BookingPanel/Dates/Dates.vue';
+import Rating from '@/components/BookingPanel/Rating/Rating.vue';
 
 @Component({
   components: {
     Dates,
+    Rating,
   },
 })
 export default class BookingPanel extends Vue {
@@ -39,13 +36,12 @@ export default class BookingPanel extends Vue {
 
   onDateChanged(date: { checkIn: string; checkOut: string }): void {
     this.date = date;
-    console.log('###onDateChanged date', date);
   }
 }
 </script>
 <style lang="scss" scoped>
 .booking-panel {
-  width: 300px;
+  width: 340px;
   padding: 20px 25px;
   margin: 0 auto;
   border: 1px solid $alto;
@@ -61,15 +57,6 @@ export default class BookingPanel extends Vue {
     align-items: flex-start;
     padding-bottom: 20px;
     border-bottom: 1px solid $alto;
-  }
-
-  &__rates {
-    display: flex;
-    margin-top: 10px;
-  }
-
-  &__number-of-rates {
-    margin-left: 10px;
   }
 }
 </style>
