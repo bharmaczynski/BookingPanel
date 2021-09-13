@@ -5,47 +5,43 @@
       @click="$emit('calendarOverlayClicked')"
     ></div>
     <div class="calendar__holder">
-      <div class="calendar__header">
-        <div
-          class="calendar__arrow calendar__arrow--previous"
-          @click="onPreviousClick"
-        ></div>
-        <span class="calendar__header-label">{{ headerLabel }}</span>
-        <div
-          class="calendar__arrow calendar__arrow--next"
-          @click="onAddClick"
-        ></div>
-      </div>
-      <div class="calendar__weekdays">
-        <div
-          v-for="weekday in weekdays"
-          :key="weekday"
-          class="calendar__weekday"
-        >
-          {{ weekday }}
-        </div>
-      </div>
+
+      <Header
+        :headerLabel="headerLabel"
+        @previousArrowClicked="onPreviousClick"
+        @nextArrowClicked="onNextClick">
+      </Header>
+      <Weekdays :weekdays="weekdays" />
+
       <div class="calendar__grid">
         <div class="calendar__week" v-for="(week, index) in weeks" :key="index">
           <div
               class="calendar__day"
               v-for="(day, index) in week"
               :key="index"
-              :class="{
-                'calendar__day--inactive' : day.outOfMonth,
-                'calendar__day--today' : day.isToday
-              }"
+
           >
-            {{ day.number }}
+            <div
+              class="calendar__day-holder"
+              :class="{
+                'calendar__day-holder--inactive' : day.outOfMonth,
+                'calendar__day-holder--today' : day.isToday
+              }"
+            >
+              <span class="calendar__day-text font-size-s">{{ day.number }}</span>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import moment from 'moment';
+import Header from '@/components/BookingPanel/Dates/Calendar/Header/Header.vue'
+import Weekdays from "@/components/BookingPanel/Dates/Calendar/Weekdays/Weekdays.vue";
 
 const MAX_NUMBER_OF_WEEKS_IN_MONTH = 6;
 const NUMBER_OF_DAYS_IN_WEEK = 7;
@@ -56,7 +52,12 @@ interface Week {
   isToday: boolean;
 }
 
-@Component
+@Component({
+  components: {
+    Header,
+    Weekdays,
+  }
+})
 export default class Calendar extends Vue {
   private currentDate = moment();
   private calendarDate = {
@@ -71,7 +72,7 @@ export default class Calendar extends Vue {
   }
 
   get headerLabel(): string {
-    return`${moment(this.calendarDate.month, 'M').format('MMMM')} - ${this.calendarDate.year}`;
+    return`${moment(this.calendarDate.month, 'M').format('MMMM')} ${this.calendarDate.year}`;
   }
 
   setCalendarDate(): void {
@@ -85,15 +86,16 @@ export default class Calendar extends Vue {
     this.setDaysInMonth();
   }
 
-  onAddClick(): void {
+  onNextClick(): void {
     this.currentDate.add(1, 'M');
     this.setCalendarDate();
     this.setDaysInMonth();
   }
 
   createArrayDaysInMonth(): Week[][] {
-    let today = parseInt(moment().format('D'));
+    const today = moment().format('DD-MM-YYYY');
     let momentDate = moment(this.currentDate);
+    const currentMonthYeay = momentDate.format('MM-YYYY');
     let monthEnded = false;
     let monthStarted = false;
     let monthDay = 0;
@@ -136,11 +138,10 @@ export default class Calendar extends Vue {
                   .format('D');
         }
 
-
         weekArray.push({
           number: monthDay !== 0 ? monthDay : outOfMonthDay,
           outOfMonth: monthDay === 0,
-          isToday: monthDay === today,
+          isToday: moment(`${monthDay}-${currentMonthYeay}`, 'DD-MM-YYYY').format('DD-MM-YYYY') === today,
         })
 
         if (monthStarted && !monthEnded && monthDay >= daysInMonth) {
@@ -181,48 +182,50 @@ export default class Calendar extends Vue {
     background: rgb(#000, 0.8);
   }
 
-  &__header {
-    display: flex;
-    height: 50px;
-    background: $oceanGreen;
-  }
-
-  &__arrow {
-    width: 30px;
-    height: 30px;
-    background: #000;
-  }
-
-  &__weekdays {
-    display: flex;
-    justify-content: center;
-  }
-
-  &__weekday {
-    width: 14%;
-  }
-
   &__grid {
     display: flex;
     flex-direction: column;
+    padding: 0 10px;
   }
 
   &__week {
-    height: 50px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 50px;
   }
 
   &__day {
     width: 14%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  &__day-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+      //border: 1px solid $downy;
 
     &--inactive {
       color: #999;
     }
 
     &--today {
-      color: $oceanGreen;
+      color: $downy;
+      //color: #fff;
+      border: 1px solid $downy;
+      //background: $downy;
     }
+  }
+
+  &__day-text {
+    font-weight: 500;
   }
 }
 </style>

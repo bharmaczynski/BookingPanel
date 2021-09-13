@@ -43,7 +43,7 @@ export default class BookingPanel extends Vue {
 </script>
 <style lang="scss" scoped>
 .booking-panel {
-  width: 340px;
+  width: 360px;
   padding: 20px 25px;
   margin: 0 auto;
   border: 1px solid $alto;

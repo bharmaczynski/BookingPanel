@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import ArrowIcon from '@/assets/icons/arror-right.svg';
+import ArrowIcon from '@/assets/icons/arrow-right.svg';
 import DateInput from '@/components/BookingPanel/Dates/DateInput/DateInput.vue';
 import Calendar from '@/components/BookingPanel/Dates/Calendar/Calendar.vue';
 
