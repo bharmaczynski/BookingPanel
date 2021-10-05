@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <BookingPanel :price="298" :number-of-rates="123" />
+    <BookingPanel
+        :price="298"
+        :number-of-rates="123"
+        :rating="4.5" />
   </div>
 </template>
 

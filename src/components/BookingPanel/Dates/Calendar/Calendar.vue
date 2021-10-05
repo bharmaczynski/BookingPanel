@@ -19,16 +19,26 @@
               class="calendar__day"
               v-for="(day, index) in week"
               :key="index"
-
+              @click="handleClick(day.value)"
+              @mouseenter="handleMouseEnter(day.value)"
+              @mouseleave="handleMouseLeave(day.value)"
           >
             <div
               class="calendar__day-holder"
               :class="{
                 'calendar__day-holder--inactive' : day.outOfMonth,
-                'calendar__day-holder--today' : day.isToday
+                'calendar__day-holder--today' : day.isToday,
+                'calendar__day-holder--unavailable' : day.unavailable,
+                'calendar__day-holder--start' : day.value === checkedDate.checkIn,
+                'calendar__day-holder--end' : day.value === checkedDate.checkOut,
+                'calendar__day-holder--between' : isBetweenDate(day.value)
               }"
             >
-              <span class="calendar__day-text font-size-s">{{ day.number }}</span>
+              <span
+                  class="calendar__day-text font-size-s"
+              >
+                {{ day.number }}
+              </span>
             </div>
           </div>
         </div>
@@ -38,19 +48,12 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 import moment from 'moment';
 import Header from '@/components/BookingPanel/Dates/Calendar/Header/Header.vue'
 import Weekdays from "@/components/BookingPanel/Dates/Calendar/Weekdays/Weekdays.vue";
-
-const MAX_NUMBER_OF_WEEKS_IN_MONTH = 6;
-const NUMBER_OF_DAYS_IN_WEEK = 7;
-
-interface Week {
-  number: number;
-  outOfMonth: boolean;
-  isToday: boolean;
-}
+import { createArrayDaysInMonth } from "@/services/calendar/calendar";
+import IWeek from "@/ts/types/week.type";
 
 @Component({
   components: {
@@ -59,13 +62,24 @@ interface Week {
   }
 })
 export default class Calendar extends Vue {
+  @Prop({ default: [] })
+  unavailableDates!: string[];
+
+  @Prop({ default: { checkIn: '', checkOut: ''} })
+  checkedDate!: {
+    checkIn: string;
+    checkOut: string;
+  };
+
   private currentDate = moment();
   private calendarDate = {
     month: this.currentDate.month() + 1,
     year: this.currentDate.year(),
   };
   private weekdays = moment.weekdaysShort();
-  private weeks: Week[][] = [];
+  private weeks: IWeek[][] = [];
+  private clickCounter = 0;
+  private clickedDate: { checkIn: string; checkOut: string} = { checkIn: '', checkOut: ''}
 
   created(): void {
     this.setDaysInMonth();
@@ -92,73 +106,49 @@ export default class Calendar extends Vue {
     this.setDaysInMonth();
   }
 
-  createArrayDaysInMonth(): Week[][] {
-    const today = moment().format('DD-MM-YYYY');
-    let momentDate = moment(this.currentDate);
-    const currentMonthYeay = momentDate.format('MM-YYYY');
-    let monthEnded = false;
-    let monthStarted = false;
-    let monthDay = 0;
-    let outOfMonthDay = 0;
+  setDaysInMonth(): void {
+    this.weeks = createArrayDaysInMonth(this.currentDate, this.calendarDate);
+    this.setUnavailableDates();
+  }
 
-    const weeks = [];
-    const numberOfWeekdayForFirstDayInMonth = momentDate.startOf('month').weekday() + 1;
-    const numberOfWeekdayForLastDayInMonth = momentDate.endOf('month').weekday() + 1;
-    const daysInMonth = momentDate.daysInMonth();
+  setUnavailableDates(): void {
+    this.weeks.map(week => {
+      week.map(day => {
+        if (this.unavailableDates.includes(day.value)) day.unavailable = true;
+      });
+    });
+  }
 
-    // prepare array of weeks in month
-    for (let weekNumber = 1; weekNumber <= MAX_NUMBER_OF_WEEKS_IN_MONTH && !monthEnded; weekNumber++) {
-      const weekArray = [];
+  handleClick(value: string): void {
+    if (this.clickCounter === 0) {
 
-      // prepare array of days in week
-      for (let day = 1; day <= NUMBER_OF_DAYS_IN_WEEK; day++) {
-        if (!monthStarted && day >= numberOfWeekdayForFirstDayInMonth) {
-          monthDay++;
-          monthStarted = true;
-        } else if (monthStarted && !monthEnded) {
-          monthDay++;
-        }
-
-        // set days that are out of month
-        if (weekNumber === 1 && day < numberOfWeekdayForFirstDayInMonth) {
-          const numberOfDayBeforeThisMonth = numberOfWeekdayForFirstDayInMonth - day;
-
-          outOfMonthDay =
-              moment(this.calendarDate.month, 'M')
-                  .subtract(numberOfDayBeforeThisMonth, 'days')
-                  .format('D');
-
-        } else if (monthEnded && day > numberOfWeekdayForLastDayInMonth) {
-          const numberOfDayAfterThisMonth = day - numberOfWeekdayForLastDayInMonth;
-
-          outOfMonthDay =
-              moment(this.calendarDate.month, 'M')
-                  .endOf('month')
-                  .add(numberOfDayAfterThisMonth, 'days')
-                  .format('D');
-        }
-
-        weekArray.push({
-          number: monthDay !== 0 ? monthDay : outOfMonthDay,
-          outOfMonth: monthDay === 0,
-          isToday: moment(`${monthDay}-${currentMonthYeay}`, 'DD-MM-YYYY').format('DD-MM-YYYY') === today,
-        })
-
-        if (monthStarted && !monthEnded && monthDay >= daysInMonth) {
-          monthDay = 0;
-          monthEnded = true;
-        }
+      this.clickCounter++;
+      this.clickedDate = {
+        checkIn: value,
+        checkOut: '',
       }
 
-      weeks.push(weekArray);
+    } else if (this.clickCounter === 1) {
+      this.clickedDate.checkOut = value
+      this.clickCounter = 0;
     }
 
-    return weeks;
+    this.$emit('input', this.clickedDate)
   }
 
-  setDaysInMonth(): void {
-    this.weeks = this.createArrayDaysInMonth();
+  handleMouseEnter(value: string): void {
+    // console.log('###handleMouseEnter value', value);
   }
+
+  handleMouseLeave(value: string): void {
+    // console.log('###handleMouseLeave value', value);
+  }
+
+  isBetweenDate(date: string): boolean {
+    return moment(date, 'DD-MM-YYYY').diff(moment(this.clickedDate.checkIn, 'DD-MM-YYYY'), 'days') > 0 &&
+        moment(date, 'DD-MM-YYYY').diff(moment(this.clickedDate.checkOut, 'DD-MM-YYYY'), 'days') < 0
+  }
+
 }
 </script>
 <style lang="scss" scoped>
@@ -185,7 +175,8 @@ export default class Calendar extends Vue {
   &__grid {
     display: flex;
     flex-direction: column;
-    padding: 0 10px;
+    margin: 0 10px;
+    overflow: hidden;
   }
 
   &__week {
@@ -204,23 +195,48 @@ export default class Calendar extends Vue {
   }
 
   &__day-holder {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 38px;
     height: 38px;
     border-radius: 50%;
-      //border: 1px solid $downy;
+    cursor: pointer;
 
     &--inactive {
-      color: #999;
+      color: #888;
     }
 
     &--today {
       color: $downy;
-      //color: #fff;
-      border: 1px solid $downy;
-      //background: $downy;
+      border: 2px solid $downy;
+    }
+
+    &--unavailable {
+      color: #999;
+      pointer-events: none;
+    }
+
+    &--start, &--end {
+      background: $downy;
+      color: #fff;
+    }
+
+    &--between {
+      color: $downy;
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        right: -15px;
+        bottom: 0;
+        left: -15px;
+        background: #CFFCF8;
+      }
     }
   }
 

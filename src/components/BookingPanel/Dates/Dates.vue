@@ -8,22 +8,23 @@
       <div class="dates-input__input-holder">
         <DateInput
           :value="date.checkIn"
-          @input="onInputCheckIn"
           @click.native="openCalendar"
         />
       </div>
       <div class="dates-input__input-holder dates-input__input-holder--checkout font-size-l">
         <DateInput
           :value="date.checkOut"
-          @input="onInputCheckOut"
           @click.native="openCalendar"
         />
       </div>
     </div>
     <Calendar
-      class="dates-input__calendar"
       v-if="calendarIsOpen"
+      class="dates-input__calendar"
+      :checkedDate="date"
+      :unavailableDates="['11-10-2021', '15-10-2021', '15-11-2021']"
       @calendarOverlayClicked="closeCalendar"
+      @input="handleCalendarInput"
     />
   </div>
 </template>
@@ -33,6 +34,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import ArrowIcon from '@/assets/icons/arrow-right.svg';
 import DateInput from '@/components/BookingPanel/Dates/DateInput/DateInput.vue';
 import Calendar from '@/components/BookingPanel/Dates/Calendar/Calendar.vue';
+import moment from 'moment';
 
 @Component({
   components: {
@@ -50,19 +52,19 @@ export default class Dates extends Vue {
     checkOut: string;
   };
 
-  onInputCheckIn(value: string): void {
-    this.$emit('dateChanged', {
-      checkIn: value,
-      checkOut: this.date.checkOut,
-    });
-  }
-
-  onInputCheckOut(value: string): void {
-    this.$emit('dateChanged', {
-      checkIn: this.date.checkIn,
-      checkOut: value,
-    });
-  }
+  // onInputCheckIn(value: string): void {
+  //   this.$emit('dateChanged', {
+  //     checkIn: value,
+  //     checkOut: this.date.checkOut,
+  //   });
+  // }
+  //
+  // onInputCheckOut(value: string): void {
+  //   this.$emit('dateChanged', {
+  //     checkIn: this.date.checkIn,
+  //     checkOut: value,
+  //   });
+  // }
 
   openCalendar(): void {
     this.calendarIsOpen = true;
@@ -70,6 +72,10 @@ export default class Dates extends Vue {
 
   closeCalendar(): void {
     this.calendarIsOpen = false;
+  }
+
+  handleCalendarInput(value: { checkIn: string; checkOut: string; }): void {
+    this.$emit('dateChanged', value);
   }
 }
 </script>
