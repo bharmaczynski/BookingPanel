@@ -58,7 +58,10 @@ export const createArrayDaysInMonth = (currentDate: moment, calendarDate: { mont
                 unavailable: false,
                 value: monthDay !== 0 ?
                     `${monthDay.toString().padStart(2, '0')}-${currentMonthYeay}` :
-                    `${outOfMonthDay}`
+                    `${outOfMonthDay}`,
+                isBetween: false,
+                temporaryUnavailable: false,
+                isInvalid: false,
             })
 
             if (monthStarted && !monthEnded && monthDay >= daysInMonth) {

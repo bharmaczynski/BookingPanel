@@ -34,7 +34,6 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import ArrowIcon from '@/assets/icons/arrow-right.svg';
 import DateInput from '@/components/BookingPanel/Dates/DateInput/DateInput.vue';
 import Calendar from '@/components/BookingPanel/Dates/Calendar/Calendar.vue';
-import moment from 'moment';
 
 @Component({
   components: {
@@ -51,20 +50,6 @@ export default class Dates extends Vue {
     checkIn: string;
     checkOut: string;
   };
-
-  // onInputCheckIn(value: string): void {
-  //   this.$emit('dateChanged', {
-  //     checkIn: value,
-  //     checkOut: this.date.checkOut,
-  //   });
-  // }
-  //
-  // onInputCheckOut(value: string): void {
-  //   this.$emit('dateChanged', {
-  //     checkIn: this.date.checkIn,
-  //     checkOut: value,
-  //   });
-  // }
 
   openCalendar(): void {
     this.calendarIsOpen = true;
