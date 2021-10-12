@@ -22,7 +22,7 @@
               :class="{
                 'calendar__day-holder--inactive' : day.outOfMonth,
                 'calendar__day-holder--today' : day.isToday,
-                'calendar__day-holder--unavailable' : day.unavailable || day.temporaryUnavailable,
+                'calendar__day-holder--unavailable' : setPastDay(day.value) || day.unavailable || day.temporaryUnavailable,
                 'calendar__day-holder--start' : day.value === checkedDate.checkIn,
                 'calendar__day-holder--end' : day.value === checkedDate.checkOut,
                 'calendar__day-holder--between' : day.isBetween,
@@ -35,6 +35,7 @@
           </div>
         </div>
       </div>
+      <div v-if="!pickedDateIsValid" class="calendar__validation">Wybierz inną date</div>
     </div>
   </div>
 </template>
@@ -44,7 +45,7 @@ import moment from 'moment';
 import Header from '@/components/BookingPanel/Dates/Calendar/Header/Header.vue'
 import Weekdays from "@/components/BookingPanel/Dates/Calendar/Weekdays/Weekdays.vue";
 import { createArrayDaysInMonth } from "@/services/calendar/calendar";
-import { isBetweenDates } from "@/modules/utils/helpers";
+import { isBetweenDates, isPastDay } from "@/modules/utils/helpers";
 import IWeek from "@/ts/types/week.type";
 
 @Component({
@@ -72,6 +73,7 @@ export default class Calendar extends Vue {
   private weeks: IWeek[][] = [];
   private clickCounter = 0;
   private clickedDate: { checkIn: string; checkOut: string} = { checkIn: '', checkOut: ''}
+  private pickedDateIsValid = true;
 
   created(): void {
     this.setDaysInMonth();
@@ -120,7 +122,7 @@ export default class Calendar extends Vue {
     });
   }
 
-  setPastDaysUnavailable(fromDate: string): void {
+  setPastDaysTemporaryUnavailable(fromDate: string): void {
     this.weeks.map(week => {
       week.map(day => {
         day.temporaryUnavailable = moment(day.value, 'DD-MM-YYYY').diff(moment(fromDate, 'DD-MM-YYYY'), 'days') < 0;
@@ -146,20 +148,24 @@ export default class Calendar extends Vue {
   }
 
   handleClick(value: string): void {
+    console.log('###this.clickCounter', this.clickCounter);
     if (this.clickCounter === 0) {
+      this.pickedDateIsValid = true;
       this.clickCounter++;
       this.removeBetween();
-      this.setPastDaysUnavailable(value);
+      this.setPastDaysTemporaryUnavailable(value);
       this.clickedDate = {
         checkIn: value,
         checkOut: '',
       }
     } else if (this.clickCounter === 1) {
+      this.pickedDateIsValid = this.isValid();
       this.clickedDate.checkOut = value
       this.clickCounter = 0;
       this.removePastDaysUnavailable();
     }
 
+    !this.pickedDateIsValid && this.resetClickedDate();
     this.$emit('input', this.clickedDate)
   }
 
@@ -177,6 +183,20 @@ export default class Calendar extends Vue {
     });
   }
 
+  setPastDay(date: string): boolean {
+    return isPastDay(date);
+  }
+
+  isValid(): boolean {
+    return !this.weeks.some(week => week.some(day => day.isInvalid))
+  }
+
+  resetClickedDate(): void {
+    this.clickedDate = { checkIn: '', checkOut: ''}
+    Vue.nextTick(this.setDaysInMonth);
+    // this.setBetweenDays();
+    // this.setDaysInMonth();
+  }
 }
 </script>
 <style lang="scss" scoped>
