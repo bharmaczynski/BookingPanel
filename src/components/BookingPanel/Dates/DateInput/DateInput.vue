@@ -2,7 +2,9 @@
   <input
       class="date-input font-size-base"
       :value="value"
-      placeholder="Check in"
+      :placeholder="placeholder"
+      readonly="readonly"
+      type="text"
   />
 </template>
 <script lang="ts">
@@ -13,9 +15,8 @@ export default class DateInput extends Vue {
   @Prop({ required: true })
   value!: string
 
-  // onInput(event: { target: HTMLInputElement }): void {
-  //   this.$emit('input', event.target.value);
-  // }
+  @Prop({ default: '' })
+  placeholder!: string
 }
 </script>
 <style lang="scss" scoped>

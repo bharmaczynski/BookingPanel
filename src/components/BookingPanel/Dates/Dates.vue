@@ -8,12 +8,14 @@
       <div class="dates-input__input-holder">
         <DateInput
           :value="date.checkIn"
+          :placeholder="'Check in'"
           @click.native="openCalendar"
         />
       </div>
       <div class="dates-input__input-holder dates-input__input-holder--checkout font-size-l">
         <DateInput
           :value="date.checkOut"
+          :placeholder="'Check out'"
           @click.native="openCalendar"
         />
       </div>
@@ -22,8 +24,9 @@
       v-if="calendarIsOpen"
       class="dates-input__calendar"
       :checkedDate="date"
-      :unavailableDates="['11-10-2021', '15-10-2021', '15-11-2021']"
+      :unavailableDates="unavailableDates"
       @calendarOverlayClicked="closeCalendar"
+      @closeCalendar="closeCalendar"
       @input="handleCalendarInput"
     />
   </div>
@@ -50,6 +53,9 @@ export default class Dates extends Vue {
     checkIn: string;
     checkOut: string;
   };
+
+  @Prop({ default: [] })
+  unavailableDates!: string[];
 
   openCalendar(): void {
     this.calendarIsOpen = true;
@@ -78,6 +84,7 @@ export default class Dates extends Vue {
     display: flex;
     width: 100%;
     border: 1px solid $alto;
+    border-radius: 2px;
     margin-top: 10px;
     transition: border 0.5s ease;
 

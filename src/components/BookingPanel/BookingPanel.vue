@@ -1,13 +1,17 @@
 <template>
   <div class="booking-panel">
     <div class="booking-panel__content-wrapper">
-      <div class="booking-panel__header">
-        <span class="booking-panel__price text--bold font-size-xxl">
-          {{ price }} zł
-        </span>
-        <Rating :numberOfRates="123" :rating="rating" />
-      </div>
-      <Dates :date="date" @dateChanged="onDateChanged" />
+      <Header
+        class="booking-panel__header"
+        :price="price"
+        :numberOfRates="numberOfRates"
+        :rating="rating"
+      />
+      <Dates
+        :date="date"
+        :unavailableDates="unavailableDates"
+        @dateChanged="onDateChanged" />
+      <Footer @buttonClicked="handleButtonClick"/>
     </div>
   </div>
 </template>
@@ -15,11 +19,15 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import Dates from '@/components/BookingPanel/Dates/Dates.vue';
 import Rating from '@/components/BookingPanel/Rating/Rating.vue';
+import Header from '@/components/BookingPanel/Header/Header.vue';
+import Footer from '@/components/BookingPanel/Footer/Footer.vue'
 
 @Component({
   components: {
     Dates,
     Rating,
+    Header,
+    Footer,
   },
 })
 export default class BookingPanel extends Vue {
@@ -37,9 +45,17 @@ export default class BookingPanel extends Vue {
   @Prop({ default: 0 })
   rating!: number;
 
+  @Prop({ default: [] })
+  unavailableDates!: string[];
+
   onDateChanged(date: { checkIn: string; checkOut: string }): void {
     this.date = date;
-    console.log('##onDateChanged this.date', this.date);
+  }
+
+  handleButtonClick(): void {
+    (this.date.checkIn && this.date.checkOut)
+      ? alert(`Selected dates: ${this.date.checkIn} - ${this.date.checkOut}`)
+      : alert('Please select date')
   }
 }
 </script>
@@ -49,6 +65,7 @@ export default class BookingPanel extends Vue {
   padding: 20px 25px;
   margin: 0 auto;
   border: 1px solid $alto;
+  border-radius: 2px;
 
   &__content-wrapper {
     display: flex;

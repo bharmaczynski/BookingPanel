@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <BookingPanel
-        :price="298"
-        :number-of-rates="123"
-        :rating="4.5" />
+      :price="298"
+      :number-of-rates="123"
+      :rating="4.5"
+      :unavailableDates="['21-10-2021', '15-10-2021', '15-11-2021']"
+    />
   </div>
 </template>
 

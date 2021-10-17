@@ -2,7 +2,7 @@
   <div class="calendar">
     <div
       class="calendar__overlay"
-      @click="$emit('calendarOverlayClicked')"
+      @click="handleOverlayClicked"
     />
     <div class="calendar__holder">
       <Header
@@ -35,7 +35,10 @@
           </div>
         </div>
       </div>
-      <div v-if="!pickedDateIsValid" class="calendar__validation">Wybierz inną date</div>
+      <div v-if="!pickedDateIsValid" class="calendar__validation">
+        <p>Select other days</p>
+        <span>Selected date includes unavailable days</span>
+      </div>
     </div>
   </div>
 </template>
@@ -77,6 +80,11 @@ export default class Calendar extends Vue {
 
   created(): void {
     this.setDaysInMonth();
+    if (this.checkedDate.checkIn && !this.checkedDate.checkOut) {
+      this.clickedDate = { ...this.checkedDate };
+      this.clickCounter = 1;
+      this.setPastDaysTemporaryUnavailable(this.clickedDate.checkIn);
+    }
   }
 
   get headerLabel(): string {
@@ -148,7 +156,6 @@ export default class Calendar extends Vue {
   }
 
   handleClick(value: string): void {
-    console.log('###this.clickCounter', this.clickCounter);
     if (this.clickCounter === 0) {
       this.pickedDateIsValid = true;
       this.clickCounter++;
@@ -163,9 +170,9 @@ export default class Calendar extends Vue {
       this.clickedDate.checkOut = value
       this.clickCounter = 0;
       this.removePastDaysUnavailable();
+      this.pickedDateIsValid ? this.$emit('closeCalendar') : this.resetClickedDate();
     }
 
-    !this.pickedDateIsValid && this.resetClickedDate();
     this.$emit('input', this.clickedDate)
   }
 
@@ -194,8 +201,12 @@ export default class Calendar extends Vue {
   resetClickedDate(): void {
     this.clickedDate = { checkIn: '', checkOut: ''}
     Vue.nextTick(this.setDaysInMonth);
-    // this.setBetweenDays();
-    // this.setDaysInMonth();
+  }
+
+  handleOverlayClicked(): void {
+    // this.resetClickedDate();
+    // this.$emit('input', this.clickedDate);
+    this.$emit('calendarOverlayClicked');
   }
 }
 </script>
@@ -266,6 +277,7 @@ export default class Calendar extends Vue {
     height: 38px;
     border-radius: 50%;
     cursor: pointer;
+    border: 2px solid transparent;
 
     &:hover {
       background: #CFFCF8;
@@ -299,9 +311,9 @@ export default class Calendar extends Vue {
         display: block;
         position: absolute;
         z-index: -1;
-        top: 0;
+        top: -2px;
         right: 19px;
-        bottom: 0;
+        bottom: -2px;
         left: -19px;
         background: #CFFCF8;
       }
@@ -313,13 +325,22 @@ export default class Calendar extends Vue {
     }
 
     &--invalid {
-      color: red;
+      color: #CA0B00;
       border: 2px solid red;
     }
   }
 
   &__day-text {
     font-weight: 500;
+  }
+
+  &__validation {
+    padding: 10px 10px 20px;
+    color: #CA0B00;
+    p {
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
   }
 }
 </style>

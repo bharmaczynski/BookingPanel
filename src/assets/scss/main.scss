@@ -1,3 +1,17 @@
 @import '@/assets/scss/variables.scss';
 @import '@/assets/scss/reset.scss';
 @import '@/assets/scss/helpers.scss';
+
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  line-height: 1.15;
+}
+
+button {
+  cursor: pointer;
+}

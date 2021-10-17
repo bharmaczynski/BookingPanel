@@ -41,6 +41,10 @@ export default class Header extends Vue {
   background: $downy;
   font-size: 18px;
 
+  &__label {
+    color: #fff;
+  }
+
   &__arrow {
     width: 26px;
     height: 26px;
@@ -50,6 +54,10 @@ export default class Header extends Vue {
     svg {
       width: auto;
       height: 100%;
+
+      path {
+        transition: fill 0.2s ease;
+      }
     }
 
     &:hover {
