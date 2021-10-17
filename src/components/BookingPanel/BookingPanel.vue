@@ -8,7 +8,7 @@
         :rating="rating"
       />
       <Dates
-        :date="date"
+        :date="pickedDate"
         :unavailableDates="unavailableDates"
         @dateChanged="onDateChanged" />
       <Footer @buttonClicked="handleButtonClick"/>
@@ -31,11 +31,6 @@ import Footer from '@/components/BookingPanel/Footer/Footer.vue'
   },
 })
 export default class BookingPanel extends Vue {
-  private date: { checkIn: string; checkOut: string } = {
-    checkIn: '',
-    checkOut: '',
-  };
-
   @Prop({ required: true })
   price!: number;
 
@@ -48,14 +43,18 @@ export default class BookingPanel extends Vue {
   @Prop({ default: [] })
   unavailableDates!: string[];
 
+  @Prop({ required: true })
+  pickedDate!: {
+    checkIn: string;
+    checkOut: string;
+  };
+
   onDateChanged(date: { checkIn: string; checkOut: string }): void {
-    this.date = date;
+    this.$emit('dateChanged', date);
   }
 
   handleButtonClick(): void {
-    (this.date.checkIn && this.date.checkOut)
-      ? alert(`Selected dates: ${this.date.checkIn} - ${this.date.checkOut}`)
-      : alert('Please select date')
+    this.$emit('bookButtonClicked', this.pickedDate);
   }
 }
 </script>

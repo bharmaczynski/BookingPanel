@@ -4,7 +4,10 @@
       :price="298"
       :number-of-rates="123"
       :rating="4.5"
-      :unavailableDates="['21-10-2021', '15-10-2021', '15-11-2021']"
+      :unavailableDates="['21-10-2021', '30-10-2021', '15-11-2021']"
+      :pickedDate="date"
+      @dateChanged="onDateChanged"
+      @bookButtonClicked="handleBookButtonClick"
     />
   </div>
 </template>
@@ -18,7 +21,22 @@ import BookingPanel from '@/components/BookingPanel/BookingPanel.vue';
     BookingPanel,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  private date: { checkIn: string; checkOut: string } = {
+    checkIn: '',
+    checkOut: '',
+  };
+
+  onDateChanged(date: { checkIn: string; checkOut: string }): void {
+    this.date = date;
+  }
+
+  handleBookButtonClick(): void {
+    (this.date.checkIn && this.date.checkOut)
+        ? alert(`Selected dates: ${this.date.checkIn} - ${this.date.checkOut}`)
+        : alert('Please select date')
+  }
+}
 </script>
 
 <style lang="scss">

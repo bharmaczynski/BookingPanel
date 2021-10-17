@@ -2,7 +2,7 @@
   <div class="calendar">
     <div
       class="calendar__overlay"
-      @click="handleOverlayClicked"
+      @click="$emit('calendarOverlayClicked')"
     />
     <div class="calendar__holder">
       <Header
@@ -103,9 +103,20 @@ export default class Calendar extends Vue {
   }
 
   onNextClick(): void {
-    this.currentDate.add(1, 'M');
-    this.setCalendarDate();
-    this.setDaysInMonth();
+    if (this.clickCounter === 1) {
+      this.checkInvalidPickedDays(this.clickedDate.checkIn, this.weeks[this.weeks.length - 1][6].value);
+      this.clickCounter = 0;
+      this.resetClickedDate()
+      this.$emit('input', this.clickedDate)
+    }
+
+    this.pickedDateIsValid = this.isValid();
+
+    if (this.pickedDateIsValid) {
+      this.currentDate.add(1, 'M');
+      this.setCalendarDate();
+      this.setDaysInMonth();
+    }
   }
 
   setDaysInMonth(): void {
@@ -202,12 +213,6 @@ export default class Calendar extends Vue {
     this.clickedDate = { checkIn: '', checkOut: ''}
     Vue.nextTick(this.setDaysInMonth);
   }
-
-  handleOverlayClicked(): void {
-    // this.resetClickedDate();
-    // this.$emit('input', this.clickedDate);
-    this.$emit('calendarOverlayClicked');
-  }
 }
 </script>
 <style lang="scss" scoped>
@@ -230,7 +235,8 @@ export default class Calendar extends Vue {
     bottom: 0;
     left: 0;
     z-index: 10;
-    background: rgb(#000, 0.8);
+    background: rgb(#000, 0.5);
+    cursor: pointer;
   }
 
   &__grid {
@@ -256,7 +262,7 @@ export default class Calendar extends Vue {
     &:last-child {
       #{$root}__day-holder--between {
         &::before {
-          right: 0;
+          right: -2px;
         }
 
         &#{$root}__day-holder--end {
@@ -298,7 +304,7 @@ export default class Calendar extends Vue {
     }
 
     &--unavailable {
-      color: #999;
+      color: rgba(#333, .3);
       pointer-events: none;
     }
 
