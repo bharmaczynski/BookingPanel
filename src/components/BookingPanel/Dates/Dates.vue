@@ -46,7 +46,7 @@ import Calendar from '@/components/BookingPanel/Dates/Calendar/Calendar.vue';
   },
 })
 export default class Dates extends Vue {
-  private calendarIsOpen = false;
+  calendarIsOpen = false;
 
   @Prop({ required: true })
   date!: {
@@ -54,8 +54,8 @@ export default class Dates extends Vue {
     checkOut: string;
   };
 
-  @Prop({ default: [] })
-  unavailableDates!: string[];
+  @Prop({ default: () => [] })
+  unavailableDates!: string[] | [];
 
   openCalendar(): void {
     this.calendarIsOpen = true;

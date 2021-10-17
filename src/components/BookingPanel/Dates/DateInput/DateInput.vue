@@ -1,10 +1,10 @@
 <template>
   <input
-      class="date-input font-size-base"
-      :value="value"
-      :placeholder="placeholder"
-      readonly="readonly"
-      type="text"
+    class="date-input font-size-base"
+    :value="value"
+    :placeholder="placeholder"
+    readonly="readonly"
+    type="text"
   />
 </template>
 <script lang="ts">

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateInput Snapshots should match initial snapshot 1`] = `
+<input
+  class="date-input font-size-base"
+  placeholder=""
+  readonly="readonly"
+  type="text"
+/>
+`;
+
+exports[`DateInput Snapshots should match snapshot in case placeholder is given 1`] = `
+<input
+  class="date-input font-size-base"
+  placeholder="lorem ipsum"
+  readonly="readonly"
+  type="text"
+/>
+`;

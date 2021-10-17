@@ -14,9 +14,9 @@
       <div class="calendar__grid">
         <div class="calendar__week" v-for="(week, index) in weeks" :key="index">
           <div
-              class="calendar__day"
-              v-for="(day, index) in week"
-              :key="index">
+            class="calendar__day"
+            v-for="(day, index) in week"
+            :key="index">
             <div
               class="calendar__day-holder"
               :class="{
@@ -28,7 +28,7 @@
                 'calendar__day-holder--between' : day.isBetween,
                 'calendar__day-holder--invalid' : day.isInvalid,
               }"
-              @click="handleClick(day.value)"
+              @click="handleDayClick(day.value)"
               @mouseenter="handleMouseEnter(day.value)">
               <span class="calendar__day-text font-size-s">{{ day.number }}</span>
             </div>
@@ -166,21 +166,22 @@ export default class Calendar extends Vue {
     });
   }
 
-  handleClick(value: string): void {
+  handleDayClick(value: string): void {
     if (this.clickCounter === 0) {
-      this.pickedDateIsValid = true;
-      this.clickCounter++;
       this.removeBetween();
       this.setPastDaysTemporaryUnavailable(value);
+
+      this.pickedDateIsValid = true;
+      this.clickCounter++;
       this.clickedDate = {
         checkIn: value,
         checkOut: '',
       }
     } else if (this.clickCounter === 1) {
+      this.removePastDaysUnavailable();
       this.pickedDateIsValid = this.isValid();
       this.clickedDate.checkOut = value
       this.clickCounter = 0;
-      this.removePastDaysUnavailable();
       this.pickedDateIsValid ? this.$emit('closeCalendar') : this.resetClickedDate();
     }
 
