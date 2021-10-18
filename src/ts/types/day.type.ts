@@ -1,4 +1,4 @@
-interface IWeek {
+interface IDay {
     number: number;
     outOfMonth: boolean;
     isToday: boolean;
@@ -9,4 +9,4 @@ interface IWeek {
     isInvalid: boolean;
 }
 
-export default IWeek;
+export default IDay;
