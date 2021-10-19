@@ -30,15 +30,16 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import moment from 'moment';
-import Header from '@/components/BookingPanel/Dates/Calendar/Header/Header.vue';
-import Weekdays from '@/components/BookingPanel/Dates/Calendar/Weekdays/Weekdays.vue';
-import Day from '@/components/BookingPanel/Dates/Calendar/Day/Day.vue';
-import ErrorInfo from '@/components/BookingPanel/Dates/Calendar/ErrorInfo/ErrorInfo.vue';
+import moment, { Moment } from 'moment';
+import Header from '@/components/bookingPanel/dates/calendar/header/Header.vue';
+import Weekdays from '@/components/bookingPanel/dates/calendar/weekdays/Weekdays.vue';
+import Day from '@/components/bookingPanel/dates/calendar/day/Day.vue';
+import ErrorInfo from '@/components/bookingPanel/dates/calendar/errorInfo/ErrorInfo.vue';
 import { createArrayDaysInMonth } from '@/services/calendar/calendar';
 import { isBetweenDates } from '@/modules/utils/helpers';
 import IDay from '@/ts/types/day.type';
 import IDate from '@/ts/types/date.type.ts';
+import ICalendarDate from '@/ts/types/calendarDate.type.ts';
 
 @Component({
     components: {
@@ -55,17 +56,17 @@ export default class Calendar extends Vue {
     @Prop({ default: { checkIn: '', checkOut: '' } })
     checkedDate!: IDate;
 
-    private currentDate = moment();
-    private calendarDate = {
+    private currentDate: Moment = moment();
+    private calendarDate: ICalendarDate = {
         month: this.currentDate.month() + 1,
         year: this.currentDate.year(),
     };
 
-    private weekdays = moment.weekdaysShort();
+    private weekdays: string[] = moment.weekdaysShort();
     private weeks: IDay[][] = [];
-    private clickCounter = 0;
-    private clickedDate: { checkIn: string; checkOut: string } = { checkIn: '', checkOut: '' };
-    private pickedDateIsValid = true;
+    private clickCounter: number = 0;
+    private clickedDate: IDate = { checkIn: '', checkOut: '' };
+    private pickedDateIsValid: boolean = true;
 
     created(): void {
         this.setDaysInMonth();

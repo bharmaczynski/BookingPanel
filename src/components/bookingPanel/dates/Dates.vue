@@ -35,8 +35,8 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import ArrowIcon from '@/assets/icons/arrow-right.svg';
-import DateInput from '@/components/BookingPanel/Dates/DateInput/DateInput.vue';
-import Calendar from '@/components/BookingPanel/Dates/Calendar/Calendar.vue';
+import DateInput from '@/components/bookingPanel/dates/dateInput/DateInput.vue';
+import Calendar from '@/components/bookingPanel/dates/calendar/Calendar.vue';
 import IDate from '@/ts/types/date.type.ts';
 
 @Component({

@@ -2,10 +2,7 @@ import { shallowMount } from "@vue/test-utils";
 import DateInput from "@/components/BookingPanel/Dates/DateInput/DateInput.vue";
 
 describe('DateInput', () => {
-    let propsData: {
-        value: string;
-        placeholder?: string;
-    };
+    let propsData;
 
     beforeEach(() => {
         propsData = {

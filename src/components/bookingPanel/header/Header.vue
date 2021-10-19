@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import Rating from '@/components/BookingPanel/Rating/Rating.vue';
+import Rating from '@/components/bookingPanel/rating/Rating.vue';
 
 @Component({
     components: {

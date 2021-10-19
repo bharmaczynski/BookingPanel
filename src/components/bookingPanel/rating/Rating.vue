@@ -21,14 +21,14 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import StarTemplate from '@/components/BookingPanel/Rating/Star/starTemplate.svg';
+import StarTemplate from '@/components/bookingPanel/rating/star/starTemplate.svg';
 
-const MAX_RAING = 5;
+const MAX_RATING: number = 5;
 
 enum STAR_CLASSES {
-    active = 'active',
-    inactive = 'inactive',
-    half = 'half',
+    Active = 'active',
+    Inactive = 'inactive',
+    Half = 'half',
 }
 
 @Component({
@@ -37,7 +37,7 @@ enum STAR_CLASSES {
     },
 })
 export default class Rating extends Vue {
-    maxRating: number = MAX_RAING;
+    maxRating: number = MAX_RATING;
 
     @Prop({ default: 0 })
     numberOfRates!: number;
@@ -50,10 +50,10 @@ export default class Rating extends Vue {
     }
 
     starClass(index: number): string {
-        let className = STAR_CLASSES.active;
+        let className = STAR_CLASSES.Active;
 
-        if (index - 0.5 === this.roundHalfRating) className = STAR_CLASSES.half;
-        if (index - 0.5 > this.roundHalfRating) className = STAR_CLASSES.inactive;
+        if (index - 0.5 === this.roundHalfRating) className = STAR_CLASSES.Half;
+        if (index - 0.5 > this.roundHalfRating) className = STAR_CLASSES.Inactive;
 
         return className;
     }

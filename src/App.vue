@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import BookingPanel from '@/components/BookingPanel/BookingPanel.vue';
+import BookingPanel from '@/components/bookingPanel/BookingPanel.vue';
 import IDate from '@/ts/types/date.type.ts';
 
 @Component({

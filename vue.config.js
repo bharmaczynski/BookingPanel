@@ -4,19 +4,21 @@ module.exports = {
             sass: {
                 prependData: `
                     @import "@/assets/scss/main.scss";
-                `
-            }
-        }
+                `,
+            },
+        },
     },
-    chainWebpack: config => {
-        config.module.rules.delete("svg");
+    chainWebpack: (config) => {
+        config.module.rules.delete('svg');
     },
     configureWebpack: {
         module: {
-            rules: [{
-                test: /\.svg$/,
-                loader: 'vue-svg-loader'
-            }]
-        }
-    }
+            rules: [
+                {
+                    test: /\.svg$/,
+                    loader: 'vue-svg-loader',
+                },
+            ],
+        },
+    },
 };

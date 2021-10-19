@@ -18,10 +18,10 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import Dates from '@/components/BookingPanel/Dates/Dates.vue';
-import Rating from '@/components/BookingPanel/Rating/Rating.vue';
-import Header from '@/components/BookingPanel/Header/Header.vue';
-import Footer from '@/components/BookingPanel/Footer/Footer.vue';
+import Dates from '@/components/bookingPanel/dates/Dates.vue';
+import Rating from '@/components/bookingPanel/rating/Rating.vue';
+import Header from '@/components/bookingPanel/header/Header.vue';
+import Footer from '@/components/bookingPanel/footer/Footer.vue';
 import IDate from '@/ts/types/date.type.ts';
 
 @Component({

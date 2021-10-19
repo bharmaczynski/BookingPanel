@@ -1,0 +1,12 @@
+{
+  "preset": "airbnb",
+  "disallowMultipleVarDecl": null,
+  "disallowSpacesInAnonymousFunctionExpression": null,
+  "disallowSpacesInFunctionExpression": null,
+  "validateIndentation": 4,
+  "requireTrailingComma": null,
+  "validateLineBreaks": null,
+  "maximumLineLength": 150,
+  "disallowTrailingWhitespace": null,
+  "requireSpacesInsideObjectBrackets": null
+}

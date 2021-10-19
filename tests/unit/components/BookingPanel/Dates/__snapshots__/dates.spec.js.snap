@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dates Snapshots should match initial snapshot 1`] = `
+<div
+  class="dates-input"
+>
+  <span
+    class="dates-input__title text--bold"
+  >
+    Dates
+  </span>
+   
+  <div
+    class="dates-input__dates-holder"
+  >
+    <div
+      class="dates-input__arrow"
+    >
+      <!---->
+    </div>
+     
+    <div
+      class="dates-input__input-holder"
+    >
+      <dateinput-stub
+        placeholder="Check in"
+        value="10-10-2021"
+      />
+    </div>
+     
+    <div
+      class="dates-input__input-holder dates-input__input-holder--checkout font-size-l"
+    >
+      <dateinput-stub
+        placeholder="Check out"
+        value="12-10-2021"
+      />
+    </div>
+  </div>
+   
+  <!---->
+</div>
+`;
+
+exports[`Dates Snapshots should match snapschot in case unavailableDates is given and calendarIsOpen = true 1`] = `
+<div
+  class="dates-input"
+>
+  <span
+    class="dates-input__title text--bold"
+  >
+    Dates
+  </span>
+   
+  <div
+    class="dates-input__dates-holder"
+  >
+    <div
+      class="dates-input__arrow"
+    >
+      <!---->
+    </div>
+     
+    <div
+      class="dates-input__input-holder"
+    >
+      <dateinput-stub
+        placeholder="Check in"
+        value="10-10-2021"
+      />
+    </div>
+     
+    <div
+      class="dates-input__input-holder dates-input__input-holder--checkout font-size-l"
+    >
+      <dateinput-stub
+        placeholder="Check out"
+        value="12-10-2021"
+      />
+    </div>
+  </div>
+   
+  <calendar-stub
+    checkeddate="[object Object]"
+    class="dates-input__calendar"
+    unavailabledates="14-10-2021,16-10-2021"
+  />
+</div>
+`;

@@ -1,20 +1,51 @@
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import IWeek from '@/ts/types/day.type';
+import ICalendarDate from '@/ts/types/calendarDate.type.ts';
+import { isToday } from '@/modules/utils/helpers.ts';
 
 const MAX_NUMBER_OF_WEEKS_IN_MONTH = 6;
 const NUMBER_OF_DAYS_IN_WEEK = 7;
 
+function getDayFromPreviousMonth(
+    dayNumberBeforeStartOfMonth: number,
+    numberOfMonth: number
+): string {
+    return moment(numberOfMonth, 'M')
+        .subtract(dayNumberBeforeStartOfMonth, 'days')
+        .format('DD-MM-YYYY');
+}
+
+function getDayFromNextMonth(dayNumberAfterEndOfMonth: number, numberOfMonth: number): string {
+    return moment(numberOfMonth, 'M')
+        .endOf('month')
+        .add(dayNumberAfterEndOfMonth, 'days')
+        .format('DD-MM-YYYY');
+}
+
+function setDayNumber(monthDay: number, dayOutsideOfMonth: string): number {
+    return monthDay !== 0 ? monthDay : parseInt(dayOutsideOfMonth.toString().substring(0, 2));
+}
+
+function setFormattedDate(
+    monthDay: number,
+    currentMonthYear: string,
+    dayOutsideOfMonth: string
+): string {
+    return monthDay !== 0
+        ? moment(`${monthDay}-${currentMonthYear}`, 'D-MM-YYYY').format('DD-MM-YYYY')
+        : `${dayOutsideOfMonth}`;
+}
+
 export const createArrayDaysInMonth = (
-    currentDate: moment,
-    calendarDate: { month: string; year: string }
+    currentDate: Moment,
+    calendarDate: ICalendarDate
 ): IWeek[][] => {
-    const today = moment().format('DD-MM-YYYY');
-    const momentDate = moment(currentDate);
-    const currentMonthYeay = momentDate.format('MM-YYYY');
-    let monthEnded = false;
-    let monthStarted = false;
-    let monthDay = 0;
-    let outOfMonthDay = 0;
+    const momentDate: Moment = moment(currentDate);
+    const currentMonthYear: string = momentDate.format('MM-YYYY');
+    let monthEnded: boolean = false;
+    let monthStarted: boolean = false;
+    let monthDay: number = 0;
+    let dayOutsideOfMonth: string = '';
 
     const weeks = [];
     const numberOfWeekdayForFirstDayInMonth = momentDate.startOf('month').weekday() + 1;
@@ -42,30 +73,27 @@ export const createArrayDaysInMonth = (
             if (weekNumber === 1 && day < numberOfWeekdayForFirstDayInMonth) {
                 const numberOfDayBeforeThisMonth = numberOfWeekdayForFirstDayInMonth - day;
 
-                outOfMonthDay = moment(calendarDate.month, 'M')
-                    .subtract(numberOfDayBeforeThisMonth, 'days')
-                    .format('DD-MM-YYYY');
+                dayOutsideOfMonth = getDayFromPreviousMonth(
+                    numberOfDayBeforeThisMonth,
+                    calendarDate.month
+                );
             } else if (monthEnded && day > numberOfWeekdayForLastDayInMonth) {
                 const numberOfDayAfterThisMonth = day - numberOfWeekdayForLastDayInMonth;
 
-                outOfMonthDay = moment(calendarDate.month, 'M')
-                    .endOf('month')
-                    .add(numberOfDayAfterThisMonth, 'days')
-                    .format('DD-MM-YYYY');
+                dayOutsideOfMonth = getDayFromNextMonth(
+                    numberOfDayAfterThisMonth,
+                    calendarDate.month
+                );
             }
 
             weekArray.push({
-                number:
-                    monthDay !== 0 ? monthDay : parseInt(outOfMonthDay.toString().substring(0, 2)),
+                number: setDayNumber(monthDay, dayOutsideOfMonth),
                 outOfMonth: monthDay === 0,
-                isToday:
-                    moment(`${monthDay}-${currentMonthYeay}`, 'DD-MM-YYYY').format('DD-MM-YYYY') ===
-                    today,
+                isToday: isToday(
+                    moment(`${monthDay}-${currentMonthYear}`, 'D-MM-YYYY').format('DD-MM-YYYY')
+                ),
                 unavailable: false,
-                value:
-                    monthDay !== 0
-                        ? `${monthDay.toString().padStart(2, '0')}-${currentMonthYeay}`
-                        : `${outOfMonthDay}`,
+                value: setFormattedDate(monthDay, currentMonthYear, dayOutsideOfMonth),
                 isBetween: false,
                 temporaryUnavailable: false,
                 isInvalid: false,

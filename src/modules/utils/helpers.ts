@@ -15,3 +15,7 @@ export const isBetweenDates = (
 export const isPastDay = (date: string): boolean => {
     return moment(date, 'DD-MM-YYYY').diff(moment(), 'days') < 0;
 };
+
+export const isToday = (date: string): boolean => {
+    return date === moment().format('DD-MM-YYYY');
+};
