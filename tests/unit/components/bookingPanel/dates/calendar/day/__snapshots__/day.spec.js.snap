@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Day Snapshots should match initial snapshot 1`] = `
+<div
+  class="day day--unavailable"
+>
+  <span
+    class="day__text font-size-s"
+  >
+    2
+  </span>
+</div>
+`;

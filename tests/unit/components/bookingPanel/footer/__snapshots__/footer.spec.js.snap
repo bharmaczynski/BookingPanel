@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should match initial snapshot 1`] = `
+<div
+  class="footer"
+>
+  <div
+    class="footer__button"
+  >
+    <button>
+      Book
+    </button>
+  </div>
+   
+  <div
+    class="footer__text"
+  >
+    <p
+      class="font-size-s"
+    >
+      
+            Lorem ipsum dolor sit amet, consectetur dipiscing elit, sed do eiusmod
+        
+    </p>
+  </div>
+</div>
+`;

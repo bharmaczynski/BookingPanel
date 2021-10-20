@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Weekdays Snapshots should match initial snapshot 1`] = `
+<div class="weekdays">
+  <div class="weekdays__weekday"><span class="weekdays__weekday-label font-size-s">aaaa</span></div>
+  <div class="weekdays__weekday"><span class="weekdays__weekday-label font-size-s">bb</span></div>
+  <div class="weekdays__weekday"><span class="weekdays__weekday-label font-size-s">cc</span></div>
+  <div class="weekdays__weekday"><span class="weekdays__weekday-label font-size-s">dd</span></div>
+</div>
+`;

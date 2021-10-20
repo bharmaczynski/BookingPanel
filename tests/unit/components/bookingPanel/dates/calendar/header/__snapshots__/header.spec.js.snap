@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Snapshots should match initial snapshot 1`] = `
+<div
+  class="header"
+>
+  <div
+    class="header__arrow header__arrow--previous"
+  >
+    <!---->
+  </div>
+   
+  <span
+    class="header__label"
+  >
+    aaaa
+  </span>
+   
+  <div
+    class="header__arrow header__arrow--next"
+  >
+    <!---->
+  </div>
+</div>
+`;

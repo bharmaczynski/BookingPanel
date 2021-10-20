@@ -1,6 +1,6 @@
-<template>
+<template functional>
     <div class="weekdays">
-        <div v-for="weekday in weekdays" :key="weekday" class="weekdays__weekday">
+        <div v-for="weekday in props.weekdays" :key="weekday" class="weekdays__weekday">
             <span class="weekdays__weekday-label font-size-s">{{ weekday }}</span>
         </div>
     </div>
