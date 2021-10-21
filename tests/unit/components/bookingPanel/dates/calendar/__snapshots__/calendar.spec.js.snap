@@ -1,0 +1,390 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Calendar Snapshots should match initial snapshot 1`] = `
+<div
+  class="calendar"
+>
+  <div
+    class="calendar__overlay"
+  />
+   
+  <div
+    class="calendar__holder"
+  >
+    <header-stub
+      headerlabel="October 2021"
+    />
+     
+    <weekdays-stub
+      weekdays="Sun,Mon,Tue,Wed,Thu,Fri,Sat"
+    />
+     
+    <div
+      class="calendar__grid"
+    >
+      <div
+        class="calendar__week"
+      >
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+      </div>
+      <div
+        class="calendar__week"
+      >
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+      </div>
+      <div
+        class="calendar__week"
+      >
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+      </div>
+      <div
+        class="calendar__week"
+      >
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+      </div>
+      <div
+        class="calendar__week"
+      >
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+      </div>
+      <div
+        class="calendar__week"
+      >
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+        <div
+          class="calendar__day"
+        >
+          <day-stub
+            checkeddate="[object Object]"
+            day="[object Object]"
+          />
+        </div>
+      </div>
+    </div>
+     
+    <!---->
+  </div>
+</div>
+`;
