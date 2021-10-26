@@ -76,13 +76,13 @@ exports[`Rating Snapshots should match initial snapshot 1`] = `
     </div>
   </div>
    
-  <div
+  <span
     class="rating__number-of-rates text--bold font-size-s"
   >
     
         0
     
-  </div>
+  </span>
 </div>
 `;
 
@@ -163,12 +163,12 @@ exports[`Rating Snapshots should match snapshot with props 1`] = `
     </div>
   </div>
    
-  <div
+  <span
     class="rating__number-of-rates text--bold font-size-s"
   >
     
         40
     
-  </div>
+  </span>
 </div>
 `;

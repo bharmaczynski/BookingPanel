@@ -25,7 +25,7 @@
             width: 100%;
             border: 0;
             padding: 10px;
-            background: #cc6665;
+            background: $rose;
             color: #fff;
             border-radius: 4px;
             transition: background 0.2s ease;

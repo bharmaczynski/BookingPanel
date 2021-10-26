@@ -57,7 +57,7 @@ export default class Day extends Vue {
     border: 2px solid transparent;
 
     &:hover {
-        background: #cffcf8;
+        background: $foam;
         color: $downy;
 
         &::before {
@@ -66,7 +66,7 @@ export default class Day extends Vue {
     }
 
     &--inactive {
-        color: #888;
+        color: $gray;
     }
 
     &--today {
@@ -81,7 +81,7 @@ export default class Day extends Vue {
 
     &--between {
         color: $downy;
-        background: #cffcf8;
+        background: $foam;
 
         &::before {
             content: '';
@@ -92,18 +92,18 @@ export default class Day extends Vue {
             right: 19px;
             bottom: -2px;
             left: -19px;
-            background: #cffcf8;
+            background: $foam;
         }
     }
 
     &--start,
     &--end {
         background: $downy;
-        color: #fff;
+        color: $white;
     }
 
     &--invalid {
-        color: #ca0b00;
+        color: $guardsman;
         border: 2px solid red;
     }
 

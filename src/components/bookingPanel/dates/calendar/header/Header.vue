@@ -36,7 +36,7 @@ export default class Header extends Vue {
     font-size: 18px;
 
     &__label {
-        color: #fff;
+        color: $white;
     }
 
     &__arrow {
@@ -57,7 +57,7 @@ export default class Header extends Vue {
         &:hover {
             svg {
                 path {
-                    fill: #fff;
+                    fill: $white;
                 }
             }
         }

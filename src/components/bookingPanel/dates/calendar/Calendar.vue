@@ -226,7 +226,7 @@ export default class Calendar extends Vue {
         position: relative;
         z-index: 100;
         width: 100%;
-        background: #ddd;
+        background: $alto;
     }
 
     &__overlay {
@@ -236,7 +236,7 @@ export default class Calendar extends Vue {
         bottom: 0;
         left: 0;
         z-index: 10;
-        background: rgb(#000, 0.5);
+        background: rgb($black, 0.5);
         cursor: pointer;
     }
 
@@ -287,7 +287,7 @@ export default class Calendar extends Vue {
         border: 2px solid transparent;
 
         &:hover {
-            background: #cffcf8;
+            background: $foam;
             color: $downy;
 
             &::before {
@@ -296,7 +296,7 @@ export default class Calendar extends Vue {
         }
 
         &--inactive {
-            color: #888;
+            color: $gray;
         }
 
         &--today {
@@ -311,7 +311,7 @@ export default class Calendar extends Vue {
 
         &--between {
             color: $downy;
-            background: #cffcf8;
+            background: $foam;
 
             &::before {
                 content: '';
@@ -322,18 +322,18 @@ export default class Calendar extends Vue {
                 right: 19px;
                 bottom: -2px;
                 left: -19px;
-                background: #cffcf8;
+                background: $foam;
             }
         }
 
         &--start,
         &--end {
             background: $downy;
-            color: #fff;
+            color: $white;
         }
 
         &--invalid {
-            color: #ca0b00;
+            color: $guardsman;
             border: 2px solid red;
         }
     }

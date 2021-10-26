@@ -14,9 +14,9 @@
                 </svg>
             </div>
         </div>
-        <div class="rating__number-of-rates text--bold font-size-s">
+        <span class="rating__number-of-rates text--bold font-size-s">
             {{ numberOfRates }}
-        </div>
+        </span>
     </div>
 </template>
 <script lang="ts">

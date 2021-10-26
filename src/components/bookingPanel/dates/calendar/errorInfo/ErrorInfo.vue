@@ -13,7 +13,7 @@ export default class ErrorInfo extends Vue {}
 <style lang="scss" scoped>
 .error-info {
     padding: 10px 10px 20px;
-    color: #ca0b00;
+    color: $guardsman;
 
     p {
         text-transform: uppercase;
