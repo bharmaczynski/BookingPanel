@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should match initial snapshot 1`] = `
+<div
+  class="header"
+>
+  <span
+    class="header__price text--bold font-size-xxl"
+  >
+     0 zł 
+  </span>
+   
+  <rating-stub
+    numberofrates="0"
+    rating="0"
+  />
+</div>
+`;
+
+exports[`Header should match snapshot with props 1`] = `
+<div
+  class="header"
+>
+  <span
+    class="header__price text--bold font-size-xxl"
+  >
+     100 zł 
+  </span>
+   
+  <rating-stub
+    numberofrates="43"
+    rating="4.3"
+  />
+</div>
+`;

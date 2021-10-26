@@ -126,6 +126,7 @@ describe('Calendar', () => {
             let resetClickedDate;
             let isValid;
             let isValidMock = false;
+            let setPastDaysTemporaryUnavailable;
 
             beforeEach(() => {
                 setCalendarDate = jest.fn();
@@ -133,41 +134,45 @@ describe('Calendar', () => {
                 checkInvalidPickedDays = jest.fn();
                 resetClickedDate = jest.fn();
                 isValid = jest.fn(() => isValidMock);
+                setPastDaysTemporaryUnavailable = jest.fn();
+
+                // wrapper = createWrapper(propsData, {
+                //     setCalendarDate,
+                //     setDaysInMonth,
+                //     checkInvalidPickedDays,
+                //     resetClickedDate,
+                //     isValid,
+                // });
             });
 
-            describe('in case this.clickCounter = 0', () => {
-                beforeEach(() => {
-                    wrapper = createWrapper(propsData, {
-                        setCalendarDate,
-                        setDaysInMonth,
-                        checkInvalidPickedDays,
-                        resetClickedDate,
-                        isValid,
-                    });
-                });
+            it('should set this.pickedDateIsValid to false in case isValid returns false', () => {
+                wrapper = createWrapper(propsData, { isValid });
+                wrapper.vm.onNextClick();
 
-                it('should set this.pickedDateIsValid to false in case isValid returns false', () => {
-                    wrapper = createWrapper(propsData, {
-                        setCalendarDate,
-                        setDaysInMonth,
-                        checkInvalidPickedDays,
-                        resetClickedDate,
-                        isValid,
-                    });
-                    wrapper.vm.onNextClick();
+                expect(wrapper.vm.pickedDateIsValid).toEqual(false);
+            });
 
-                    expect(wrapper.vm.pickedDateIsValid).toEqual(false);
-                });
+            it('should set this.pickedDateIsValid to true in case isValid returns false', () => {
+                isValidMock = true;
+                wrapper = createWrapper(propsData, { isValid });
+                wrapper.vm.onNextClick();
 
-                it('should set this.pickedDateIsValid to true in case isValid returns true', () => {
-                    isValidMock = true;
-                    wrapper.vm.onNextClick();
+                expect(wrapper.vm.pickedDateIsValid).toEqual(true);
+            });
 
-                    expect(wrapper.vm.pickedDateIsValid).toEqual(true);
-                });
+            it('should call checkInvalidPickedDays in case this.clickCounter = 1', () => {
+                wrapper = createWrapper(propsData, { checkInvalidPickedDays });
+                wrapper.vm.clickedDate.checkIn = '20-10-2021';
+                wrapper.vm.clickCounter = 1;
+                wrapper.vm.onNextClick();
 
+                expect(checkInvalidPickedDays).toHaveBeenCalledWith('20-10-2021', '06-11-2021');
+            });
+
+            describe('in case this.pickedDateIsValid = true', () => {
                 it('should set this.currentDate to next month', () => {
                     isValidMock = true;
+                    wrapper = createWrapper(propsData, { isValid });
                     wrapper.vm.onNextClick();
 
                     expect(wrapper.vm.currentDate).toMatchInlineSnapshot(
@@ -177,6 +182,7 @@ describe('Calendar', () => {
 
                 it('should call setDaysInMonth', () => {
                     isValidMock = true;
+                    wrapper = createWrapper(propsData, { isValid, setCalendarDate });
                     wrapper.vm.onNextClick();
 
                     expect(setCalendarDate).toHaveBeenCalled();
@@ -184,44 +190,46 @@ describe('Calendar', () => {
 
                 it('should call setCalendarDate', () => {
                     isValidMock = true;
+                    wrapper = createWrapper(propsData, { isValid, setDaysInMonth });
                     wrapper.vm.onNextClick();
 
                     expect(setDaysInMonth).toHaveBeenCalled();
                 });
-            });
 
-            describe('in case this.clickCounter = 1', () => {
-                it('should call checkInvalidPickedDays', () => {
+                it('should call setPastDaysTemporaryUnavailable', () => {
+                    isValidMock = true;
                     wrapper = createWrapper(propsData, {
-                        checkInvalidPickedDays,
+                        isValid,
+                        setPastDaysTemporaryUnavailable,
                     });
                     wrapper.vm.clickedDate.checkIn = '20-10-2021';
-                    wrapper.vm.clickCounter = 1;
                     wrapper.vm.onNextClick();
 
-                    expect(checkInvalidPickedDays).toHaveBeenCalledWith('20-10-2021', '06-11-2021');
+                    expect(setPastDaysTemporaryUnavailable).toHaveBeenCalledWith('20-10-2021');
                 });
+            });
 
+            describe('in case this.pickedDateIsValid = false', () => {
                 it('should set this.clickCounter to 0', () => {
-                    wrapper = createWrapper(propsData);
-                    wrapper.vm.clickCounter = 1;
+                    isValidMock = false;
+                    wrapper = createWrapper(propsData, { isValid });
                     wrapper.vm.onNextClick();
 
                     expect(wrapper.vm.clickCounter).toEqual(0);
                 });
 
                 it('should call resetClickedDate', () => {
-                    wrapper = createWrapper(propsData, { resetClickedDate });
-                    wrapper.vm.clickCounter = 1;
+                    isValidMock = false;
+                    wrapper = createWrapper(propsData, { isValid, resetClickedDate });
                     wrapper.vm.onNextClick();
 
                     expect(resetClickedDate).toHaveBeenCalled();
                 });
 
                 it('should call emit with proper params', () => {
-                    wrapper = createWrapper(propsData, { resetClickedDate });
+                    isValidMock = false;
+                    wrapper = createWrapper(propsData, { isValid, resetClickedDate });
                     wrapper.vm.$emit = jest.fn();
-                    wrapper.vm.clickCounter = 1;
                     wrapper.vm.clickedDate.checkIn = '20-10-2021';
                     wrapper.vm.onNextClick();
 
@@ -249,10 +257,10 @@ describe('Calendar', () => {
 
                 wrapper.vm.setDaysInMonth();
 
-                expect(createArrayDaysInMonthMock).toHaveBeenCalledWith(
-                    wrapper.vm.currentDate,
-                    wrapper.vm.calendarDate
-                );
+                expect(createArrayDaysInMonthMock).toHaveBeenCalledWith('10-10-2021', {
+                    month: 10,
+                    year: 2021,
+                });
             });
 
             it('should call setUnavailableDates', () => {

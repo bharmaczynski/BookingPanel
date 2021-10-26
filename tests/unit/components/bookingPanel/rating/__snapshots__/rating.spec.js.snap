@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rating Snapshots should match initial snapshot 1`] = `
+<div
+  class="rating"
+>
+  <div
+    class="rating__stars"
+  >
+    <!---->
+     
+    <div
+      class="rating__star-icon inactive"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+    <div
+      class="rating__star-icon inactive"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+    <div
+      class="rating__star-icon inactive"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+    <div
+      class="rating__star-icon inactive"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+    <div
+      class="rating__star-icon inactive"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+  </div>
+   
+  <div
+    class="rating__number-of-rates text--bold font-size-s"
+  >
+    
+        0
+    
+  </div>
+</div>
+`;
+
+exports[`Rating Snapshots should match snapshot with props 1`] = `
+<div
+  class="rating"
+>
+  <div
+    class="rating__stars"
+  >
+    <!---->
+     
+    <div
+      class="rating__star-icon active"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+    <div
+      class="rating__star-icon active"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+    <div
+      class="rating__star-icon active"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+    <div
+      class="rating__star-icon half"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          fill="url(#half)"
+          href="#star"
+        />
+      </svg>
+    </div>
+    <div
+      class="rating__star-icon inactive"
+    >
+      <svg
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+      >
+        <use
+          href="#star"
+        />
+      </svg>
+    </div>
+  </div>
+   
+  <div
+    class="rating__number-of-rates text--bold font-size-s"
+  >
+    
+        40
+    
+  </div>
+</div>
+`;
