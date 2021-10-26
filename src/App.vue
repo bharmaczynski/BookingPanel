@@ -4,7 +4,7 @@
             :price="298"
             :number-of-rates="123"
             :rating="4.5"
-            :unavailableDates="['21-10-2021', '30-10-2021', '15-11-2021']"
+            :unavailableDates="['21-10-2021', '26-10-2021', '15-11-2021']"
             :pickedDate="date"
             @dateChanged="onDateChanged"
             @bookButtonClicked="handleBookButtonClick"

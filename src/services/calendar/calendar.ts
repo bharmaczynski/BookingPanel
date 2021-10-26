@@ -37,10 +37,10 @@ function setFormattedDate(
 }
 
 export const createArrayDaysInMonth = (
-    currentDate: Moment,
+    currentDate: string,
     calendarDate: ICalendarDate
 ): IWeek[][] => {
-    const momentDate: Moment = moment(currentDate);
+    const momentDate: Moment = moment(currentDate, 'DD-MM-YYYY');
     const currentMonthYear: string = momentDate.format('MM-YYYY');
     let monthEnded: boolean = false;
     let monthStarted: boolean = false;

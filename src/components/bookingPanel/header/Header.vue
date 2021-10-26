@@ -14,7 +14,7 @@ import Rating from '@/components/bookingPanel/rating/Rating.vue';
     },
 })
 export default class Header extends Vue {
-    @Prop({ required: true })
+    @Prop({ default: 0 })
     price!: number;
 
     @Prop({ default: 0 })

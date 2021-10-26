@@ -98,9 +98,6 @@ export default class Calendar extends Vue {
                 this.clickedDate.checkIn,
                 this.weeks[this.weeks.length - 1][6].value
             );
-            this.clickCounter = 0;
-            this.resetClickedDate();
-            this.$emit('input', this.clickedDate);
         }
 
         this.pickedDateIsValid = this.isValid();
@@ -109,11 +106,19 @@ export default class Calendar extends Vue {
             this.currentDate.add(1, 'M');
             this.setCalendarDate();
             this.setDaysInMonth();
+            this.setPastDaysTemporaryUnavailable(this.clickedDate.checkIn);
+        } else {
+            this.clickCounter = 0;
+            this.resetClickedDate();
+            this.$emit('input', this.clickedDate);
         }
     }
 
     setDaysInMonth(): void {
-        this.weeks = createArrayDaysInMonth(this.currentDate, this.calendarDate);
+        this.weeks = createArrayDaysInMonth(
+            this.currentDate.format('DD-MM-YYYY'),
+            this.calendarDate
+        );
         this.setUnavailableDates();
         this.setBetweenDays();
     }
